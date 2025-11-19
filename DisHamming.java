@@ -4,15 +4,16 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 public class DisHamming {
+
     public static void Hamm (TreeSet <String> diccionario, String b) {
         int distancia=0;
-        int distanciapal=0;
+        int distanciapal=9999;
         String semejanza="";
         char[] dos = b.toCharArray();
         for(String i: diccionario) {
-            String palabra= i;
-            char[] uno=palabra.toCharArray();
-            distancia=0;
+            String palabra = i;
+            char[] uno = palabra.toCharArray();
+            distancia = 0;
             if (uno.length <= dos.length) {
                 for (int j = 0; j < uno.length; j++) {
                     if (uno[j] != dos[j]) {
@@ -26,13 +27,16 @@ public class DisHamming {
                     }
                 }
             }
-            if(distancia< distanciapal){
-                semejanza=i;
+            distancia += Math.abs(uno.length - dos.length);
+
+            if (distancia < distanciapal) {
+                distanciapal = distancia;
+                semejanza = i;
             }
-            distanciapal=distancia;
         }
-        System.out.println("La palabra que buscas es: "+ semejanza);
+        System.out.print(semejanza + " ");
     }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         TreeSet<String> diccionario = new TreeSet<>();
@@ -44,10 +48,25 @@ public class DisHamming {
         diccionario.add("Calendario");
         diccionario.add("Taza");
         diccionario.add("Boligrafo");
-        diccionario.add("Gtifo");
         diccionario.add("Meneo");
-        System.out.println("Escribe una palabra mal");
-        String b = sc.nextLine();
-        Hamm(diccionario,b);
+        diccionario.add("En");
+        diccionario.add("un");
+        diccionario.add("lugar");
+        diccionario.add("de");
+        diccionario.add("la");
+        diccionario.add("Mancha");
+        diccionario.add("cuyo");
+        diccionario.add("nombre");
+        diccionario.add("no");
+        diccionario.add("quiero");
+        diccionario.add("acordarme");
+        System.out.println("Escribe una frase mal escrita:");
+        String frase = sc.nextLine();
+        String[] palabras = frase.split(" ");
+        System.out.println("Lo que buscas es:");
+
+        for (String palabra : palabras) {
+            Hamm(diccionario, palabra);
+        }
     }
 }
